@@ -1,7 +1,6 @@
 FROM	debian:bullseye
 
-RUN	apt update && apt upgrade && apt install -y \
-	nginx
+RUN	apt-get update && apt-get -y upgrade && apt-get install -y nginx
 
 #export port and copy conf file?
 EXPOSE 80
