@@ -4,3 +4,8 @@ services:
     container_name: nginx
     ports:
       - "8080:80"
+    restart: always
+
+  wordpress:
+    build: requirements/wordpress/.
+    container_name: wp-php
