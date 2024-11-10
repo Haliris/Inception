@@ -18,15 +18,17 @@ RUN	chmod +x wp-cli.phar
 RUN	mv wp-cli.phar /usr/local/bin/wp
 RUN	wp --info
 
-RUN	mkdir -p /var/www/html/wordpress && \
-	chmod -R 777 /var/www/html/wordpress && \
-	chown -R www-data:www-data /var/www/html/wordpress
+RUN	mkdir -p /var/www/wordpress && \
+	chmod -R 777 /var/www/wordpress && \
+	chown -R www-data:www-data /var/www/wordpress
 
-WORKDIR	/var/www/html/wordpress
+WORKDIR	/var/www/wordpress
 
-COPY	./tools/auto_config.sh /usr/local/bin/
+COPY	./tools/auto_config.sh /usr/local/bin/auto_config.sh
 RUN	chmod +x /usr/local/bin/auto_config.sh && mkdir -p /run/php
 
 EXPOSE	9000
 
-ENTRYPOINT	["/usr/local/bin/auto_config.sh"]
+CMD	["sh", "/usr/local/bin/auto_config.sh"]
+
+
