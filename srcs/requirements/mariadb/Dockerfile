@@ -1,8 +1,16 @@
 FROM	debian:bullseye
 
-RUN	sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install mariadb-server mariadb-client -y
-RUN	sudo systemctl enable mariadb && sudo systemctl start mariadb
+RUN	 apt-get update -y &&  apt-get upgrade -y &&  apt-get install mariadb-server mariadb-client -y
 
-RUN	sudo systemctl status mariadb
+COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY	tools/script.sh ./
+RUN	chmod 777 ./script.sh
 
-COPY	conf/50-server.cnd /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN	mkdir -p /var/run/mysqld && \
+	chown mysql:mysql /var/run/mysqld && \
+	chmod 777 /var/run/mysqld
+	
+EXPOSE	3306
+
+ENTRYPOINT ["script.sh"]
+CMD ["mysqld"]
