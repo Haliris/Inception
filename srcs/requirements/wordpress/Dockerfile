@@ -1,6 +1,7 @@
 FROM	debian:bullseye
 
 RUN	apt-get update && apt-get upgrade -y
+RUN	apt-get install -y net-tools
 RUN	apt-get -y install wget
 RUN	apt-get install -y php7.4\
 	php-fpm\
@@ -29,4 +30,4 @@ RUN	chmod +x /usr/local/bin/auto_config.sh && mkdir -p /run/php
 
 EXPOSE	9000
 
-CMD	["sh", "/usr/local/bin/auto_config.sh"]
+CMD	exec /usr/local/bin/auto_config.sh
