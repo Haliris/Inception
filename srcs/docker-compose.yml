@@ -1,11 +1,82 @@
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+secrets:
+  db_password:
+    file: secrets/db_password.txt
+  db_root_password:
+    file: secrets/db_root_password.txt
+  wp_password:
+    file: secrets/wp_password.txt
+
+volumes:
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/users/jteissie/data/wordpress'
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/users/jteissie/data/mariadb'
+
+
 services:
-  nginx:
-    build: requirements/nginx/.
-    container_name: nginx
-    ports:
-      - "8080:80"
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb/.
+    dockerfile: Dockerfile
+    env_file: .env
     restart: always
+    secrets:
+      - db_password
+    expose:
+      - "3306"
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
+
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/.
+    restart: always
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/wordpress
 
   wordpress:
+    container_name: wordpress
     build: requirements/wordpress/.
-    container_name: wp-php
+    depends_on:
+      - mariadb
+    env_file: .env
+    dockerfile: Dockerfile
+    restart: always
+    networks:
+      - inception
+    expose:
+      - "9000"
+    volumes:
+      - wordpress:/var/www/wordpress
+    secrets:
+      - db_password
+      - db_root_password
+      - wp_password
