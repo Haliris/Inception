@@ -30,5 +30,3 @@ RUN	chmod +x /usr/local/bin/auto_config.sh && mkdir -p /run/php
 EXPOSE	9000
 
 CMD	["sh", "/usr/local/bin/auto_config.sh"]
-
-
