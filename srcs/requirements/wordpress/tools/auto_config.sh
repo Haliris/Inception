@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 #Make sure MariaDB has started properly
 sleep 10
