@@ -31,8 +31,9 @@ volumes:
 services:
   mariadb:
     container_name: mariadb
-    build: requirements/mariadb/.
-    dockerfile: Dockerfile
+    build: 
+      context: requirements/mariadb/.
+      dockerfile: Dockerfile
     env_file: .env
     restart: always
     secrets:
@@ -43,12 +44,12 @@ services:
       - inception
     volumes:
       - mariadb:/var/lib/mysql
-    networks:
-      - inception
 
   nginx:
     container_name: nginx
-    build: requirements/nginx/.
+    build: 
+      context: requirements/nginx/.
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       wordpress:
@@ -64,7 +65,9 @@ services:
 
   wordpress:
     container_name: wordpress
-    build: requirements/wordpress/.
+    build: 
+      context: requirements/wordpress/.
+      dockerfile: Dockerfile
     depends_on:
       - mariadb
     env_file: .env
