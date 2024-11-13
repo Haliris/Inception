@@ -43,7 +43,7 @@ services:
     networks:
       - inception
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www/html
 
   mariadb:
     container_name: mariadb
@@ -88,7 +88,7 @@ services:
     expose:
       - "9000"
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www/html
     secrets:
       - db_password
       - db_root_password

@@ -14,6 +14,6 @@ RUN	chmod 755 /var/www/html
 RUN	chown -R www-data:www-data /var/www/html
 
 #export port and copy conf file?
-EXPOSE 80
+EXPOSE 443
 
 CMD	["nginx", "-g", "daemon off;"]
