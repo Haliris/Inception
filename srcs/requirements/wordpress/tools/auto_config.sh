@@ -30,7 +30,7 @@ else
 
 	echo "Creating user..."
 	wp user create "${WP_USER}" "${WP_USER_EMAIL}" \
-		--role=author \
+		--role=subscriber \
 		--user_pass="$(cat /run/secrets/wp_password)" \
 		--allow-root|| { echo "Wordpress user create failed"; exit 1; }
 fi
