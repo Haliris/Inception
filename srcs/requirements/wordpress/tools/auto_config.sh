@@ -19,6 +19,11 @@ else
 		--dbhost=mariadb:3306 \
 		--path='/var/www/html' || { echo "Wordpress core config failed"; exit 1; }
 
+	echo "Setting up redis-cache..."
+	wp config set WP_CACHE true --raw || { echo "Redis-cache CACHE config setup failed"; exit 1; }
+	wp config set WP_REDIS_HOST 'redis' || { echo "Redis-cache HOST config setup failed"; exit 1; }
+	wp config set WP_REDIS_PORT 6379 --raw || { echo "Redis-cache PORT config setup failed"; exit 1; }
+
 	echo "Installing WordPress..."
 	wp core install \
 		--url="${WP_URL}" \

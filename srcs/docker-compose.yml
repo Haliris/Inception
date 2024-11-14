@@ -94,8 +94,8 @@ services:
       - db_root_password
       - wp_password
 
-  redis-cache:
-    container_name: redis-cache
+  redis:
+    container_name: redis
     build:
       context: requirements/bonus/redis-cache/.
       dockerfile: Dockerfile
