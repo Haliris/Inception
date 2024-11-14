@@ -113,11 +113,14 @@ services:
       args:
         FTP_USER: ${FTP_USER}
         FTP_PASS: ${FTP_PASS}
+    init: true
     env_file: .env
+    restart: unless-stopped
+    pull_policy: never
     networks: 
       - inception
     ports:
-      - "21:21"
-      - "21000-21010:21000-21010"        
+      - "20-21:20-21"
+      - "30000-30010:30000-30010"        
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/home/${FTP_USER}/wordpress
