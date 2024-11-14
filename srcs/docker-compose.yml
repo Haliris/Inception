@@ -104,3 +104,21 @@ services:
       - inception
     expose:
       - "6379"
+  ftp:
+    container_name: ftp-server
+    build:
+      content: requirements/bonus/ftp/.
+      dockerfile: Dockerfile
+    args:
+      FTP_USER: ${FTP_USER}
+      FTP_PASS: ${FTP_PASS}
+    environment:
+      PASV_ADDRESS: ${PASV_ADDRESS}
+      PASV_MIN_PORT: ${PASV_MIN_PORT}
+      PASV_MAX_PORT: ${PASV_MAX_PORT}
+    networks: inception
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"        
+    volumes:
+      - wordpress:/var/www/html
