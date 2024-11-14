@@ -93,3 +93,14 @@ services:
       - db_password
       - db_root_password
       - wp_password
+
+  redis-cache:
+    container_name: redis-cache
+    build:
+      context: requirements/bonus/redis-cache/.
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - inception
+    expose:
+      - "6379"
