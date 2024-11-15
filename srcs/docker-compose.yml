@@ -114,6 +114,10 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    environment:
+      - ADMINER_DEFAULT_SERVER=${ADMINER_DEFAULT_SERVER}
+      - ADMINER_USERNAME=${ADMINER_USERNAME}
+      - ADMINER_PASSWORD=${ADMINER_PASSWORD}
     networks:
       - inception
     pull_policy: never
