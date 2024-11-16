@@ -166,3 +166,20 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+  
+  kibana:
+    container_name: kibana
+    build:
+      context: requirements/bonus/kibana/.
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    pull_policy: never
+    depends_on:
+      wordpress:
+        conditon: service_healthy
+    networks:
+      - inception
+    ports:
+      "5601:5601"
+
