@@ -37,6 +37,10 @@ else
 	wp config set WP_DEBUG true --raw --allow-root || { echo "Redis-cache WP_DEBUG config setup failed"; exit 1; }
 	wp config set WP_REDIS_PORT 6379 --raw --allow-root || { echo "Redis-cache PORT config setup failed"; exit 1; }
 
+	echo "Installing elasticpress plugin..."
+	wp plugin install elasticpress --activate --allow-root --path=/var/www/html || { echo "Failed to install elasticpress plugin"; exit 1; }
+	wp config set EP_HOST 'http://elasticsearch:9200' --raw --allow-root --path=/var/www/html || { echo "Failed to set elasticsearch EP_HOST"; exit 1; } 
+
 	echo "Installing php-redis extension"
 	apt-get install -y php-redis || { echo "Failed to install redis php extension"; exit 1; }
 	#service php7.4-fpm restart || { echo "Failed to restart php7.4-fpm"; exit 1; }
