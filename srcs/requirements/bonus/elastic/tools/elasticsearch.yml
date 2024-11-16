@@ -1,0 +1,2 @@
+cluster.name: "inception"
+network.host: 0.0.0.0

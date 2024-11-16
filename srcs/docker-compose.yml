@@ -148,5 +148,21 @@ services:
       - "20-21:20-21"
       - "30000-30010:30000-30010"        
     volumes:
-      #- wordpress:/home/${FTP_USER}/wordpress
       - wordpress:/var/www/html
+
+  elastic:
+    container_name: elasticsearch
+    build:
+      context: requirements/bonus/elastic/.
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    pull_policy: never
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    networks: inception
+    ports:
+      - "9200"
+      - "9300"
+
