@@ -177,9 +177,9 @@ services:
     pull_policy: never
     depends_on:
       wordpress:
-        conditon: service_healthy
+        condition: service_healthy
     networks:
       - inception
     ports:
-      "5601:5601"
+      - "5601:5601"
 
