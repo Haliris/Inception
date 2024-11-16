@@ -164,6 +164,5 @@ services:
     networks: 
       - inception
     ports:
-      - "9200"
-      - "9300"
-
+      - "9200:9200"
+      - "9300:9300"

@@ -1,2 +1,5 @@
 cluster.name: "inception"
 network.host: 0.0.0.0
+http.port: 9200
+dicovery.type: single-node
+logger.level: DEBUG
