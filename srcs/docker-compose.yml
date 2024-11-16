@@ -161,7 +161,8 @@ services:
     depends_on:
       wordpress:
         condition: service_healthy
-    networks: inception
+    networks: 
+      - inception
     ports:
       - "9200"
       - "9300"

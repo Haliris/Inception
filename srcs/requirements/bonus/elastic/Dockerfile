@@ -1,23 +1,24 @@
-FROM	ubuntu:14.04
+FROM	ubuntu:20.04
 
 ENV	DEBIAN_FRONTENT=noninteractive
 
-RUN	apt-get install -y --no-install-recommends software-properties-common && add-apt-repository -y ppa:webupd8team/java && \
-	apt-get update && \
-	(echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections) && \
-	apt-get install --no-install-recommends -y oracle-java8-installer && \
-	rm -rf /var/cache/oracle-jdk8-installer && \
-	echo "networkaddress.cache.ttl=60" >> /usr/lib/jvm/java-8-oracle/jre/lib/security/java.security && \
+RUN	apt-get update && \
+	apt-get install -y --no-install-recommends \
+	openjdk-8-jdk \
+	software-properties-common \
+	apt-transport-https \
+	curl \
+	gnupg2 && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV	JAVA_HOME /usr/lib/jvm/java-8-oracle
+ENV	JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
-RUN	groupadd -g 1000 elasticsearch && useradd elasticsearch -u 1000 -g 1000
+RUN	curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
+    	add-apt-repository "deb https://artifacts.elastic.co/packages/7.x/apt stable main" && \
+    	apt-get update && \
+    	apt-get install -y --no-install-recommends elasticsearch
 
-RUN	apt-key adv --keyserver pgp.mit.edu --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4 && \
-    add-apt-repository -y "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" --keyserver https://pgp.mit.edu/ && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends elasticsearch
+RUN	groupadd -g 1000 elasticsearch || true && useradd elasticsearch -u 1000 -g 1000 || true
 
 WORKDIR	/usr/share/elasticsearch
 
