@@ -39,7 +39,7 @@ else
 
 	echo "Installing elasticpress plugin..."
 	wp plugin install elasticpress --activate --allow-root --path=/var/www/html || { echo "Failed to install elasticpress plugin"; exit 1; }
-	wp config set EP_HOST 'http://elasticsearch:9200' --raw --allow-root --path=/var/www/html || { echo "Failed to set elasticsearch EP_HOST"; exit 1; } 
+	#wp config set EP_HOST elasticsearch:9200 --raw --allow-root --path=/var/www/html || { echo "Failed to set elasticsearch EP_HOST"; exit 1; } 
 
 	echo "Installing php-redis extension"
 	apt-get install -y php-redis || { echo "Failed to install redis php extension"; exit 1; }
