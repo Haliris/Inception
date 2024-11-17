@@ -1,9 +1,13 @@
 cluster.name: "inception"
 network.host: 0.0.0.0
-dicovery.type: single-node
-logger.level: DEBUG
+discovery.type: single-node
+logger.level: ERROR
+logging.verbose: true
 
 http.cors.enabled: true
 http.cors.allow-origin: "*"
 http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers: "X-Requested-With, Content-Type, Content-Length, Authorization"
+
+xpack.security.enabled: false
+xpack.security.transport.ssl.enabled: false

@@ -11,7 +11,7 @@ RUN	apt-get update && \
 	gnupg2 && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV	JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV	ES_JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 RUN	curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
     	add-apt-repository "deb https://artifacts.elastic.co/packages/7.x/apt stable main" && \
@@ -30,7 +30,7 @@ RUN	set -ex && for path in data logs config config/scripts; do \
 COPY	tools/logging.yml /usr/share/elasticsearch/config/
 COPY	tools/elasticsearch.yml /usr/share/elasticsearch/config/
 
-EXPOSE	9200 9300
+EXPOSE	9200
 
 USER	elasticsearch
 

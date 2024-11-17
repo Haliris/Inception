@@ -181,9 +181,11 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file: .env
+    environment:
+      - SERVER_HOST=0.0.0.0
     pull_policy: never
     depends_on:
-      wordpress:
+      elastic:
         condition: service_healthy
     networks:
       - inception
