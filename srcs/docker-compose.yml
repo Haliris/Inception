@@ -33,6 +33,13 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/jteissie/data/uptimekuma'
+  static-site:
+    name: static-site
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/jteissie/data/static-site'
 
 services:
   nginx:
@@ -47,9 +54,11 @@ services:
     env_file: .env
     ports:
       - "443:443"
+      - "80:80"
     networks:
       - inception
     volumes:
+      - static-site:/usr/share/nginx/html:ro
       - wordpress:/var/www/html
 
   mariadb:

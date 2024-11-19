@@ -9,11 +9,12 @@ RUN	apt-get install openssl -y && openssl req -x509 -nodes -out /etc/nginx/ssl/i
 RUN	mkdir -p /var/run/nginx
 
 COPY	conf/nginx.conf /etc/nginx/nginx.conf
+COPY	static /usr/share/nginx/html
 
 RUN	chmod 755 /var/www/html
 RUN	chown -R www-data:www-data /var/www/html
 
 #export port and copy conf file?
-EXPOSE 443
+EXPOSE 443 80
 
 CMD	["nginx", "-g", "daemon off;"]
