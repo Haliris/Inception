@@ -1,5 +1,0 @@
-server.host: "0.0.0.0"
-server.port: 5601
-server.name: kibana
-server.publicBaseUrl: "https://kibana.jteissie.42.fr"
-elasticsearch.hosts: [ "http://elasticsearch:9200" ]

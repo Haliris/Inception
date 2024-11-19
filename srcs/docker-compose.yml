@@ -68,27 +68,6 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
 
-  elastic:
-    container_name: elasticsearch
-    build:
-      context: requirements/bonus/elastic/.
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    env_file: .env
-    pull_policy: never
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
-      interval: 15s
-      timeout: 10s
-      retries: 3
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
-    networks: 
-      - inception
-    ports:
-      - "9200:9200"
-      - "9300:9300"
- 
   wordpress:
     container_name: wordpress
     build: 
@@ -96,8 +75,6 @@ services:
       dockerfile: Dockerfile
     depends_on:
      mariadb:
-        condition: service_healthy
-     elastic:
         condition: service_healthy
     healthcheck:
       test: netstat -an | grep 9000 > /dev/null || exit 1
@@ -173,22 +150,4 @@ services:
       - "30000-30010:30000-30010"        
     volumes:
       - wordpress:/var/www/html
-
-  kibana:
-    container_name: kibana
-    build:
-      context: requirements/bonus/kibana/.
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      - SERVER_HOST=0.0.0.0
-    pull_policy: never
-    depends_on:
-      elastic:
-        condition: service_healthy
-    networks:
-      - inception
-    ports:
-      - "5601:5601"
 
